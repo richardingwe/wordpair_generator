@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primaryColor: Colors.purple[900]),
         home: Scaffold(
           appBar: AppBar(title: Text('WordPair Generator')),
+          body: Center(child: Text('Hello World'),),
         ));
   }
 }
