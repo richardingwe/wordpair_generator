@@ -20,32 +20,33 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
+  final _randomWordPairs = <WordPair>[];
+
   Widget _buildList() {
-    return ListView(
-      padding: const EdgeInsets.all(8),
-      children: <Widget>[
-        Container(
-          height: 50,
-          color: Colors.amber[600],
-          child: const Center(child: Text('Entry A'),),
-        ),
-        Container(
-          height: 50,
-          color: Colors.amber[500],
-          child: const Center(child: Text('Entry B'),),
-        ),
-        Container(
-          height: 50,
-          color: Colors.amber[400],
-          child: const Center(child: Text('Entry C'),),
-        ),
-      ],
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context, item) {
+        if (item.isOdd) return Divider();
+
+        final index = item ~/ 2;
+
+        if (index >= _randomWordPairs.length) {
+          _randomWordPairs.addAll(generateWordPairs().take(10));
+        }
+
+        return _buildRow(_randomWordPairs[index]);
+      },
     );
+  }
+
+  Widget _buildRow(WordPair pair) {
+    return ListTile(
+        title: Text(pair.asPascalCase, style: TextStyle(fontSize: 18.0)));
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('WordPair - Generator')),
-      body: _buildList());
+        appBar: AppBar(title: Text('WordPair - Generator')),
+        body: _buildList());
   }
 }
